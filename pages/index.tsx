@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
 interface IMsg {
@@ -36,6 +36,29 @@ const Home: NextPage = () => {
 
   const [chat, setChat] = useState<IMsg[]>([]);
 
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const input = event.currentTarget.content;
+
+    if (!input.value) return;
+
+    const message = {
+      user,
+      msg: input.value,
+    };
+
+    await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(message),
+    });
+
+    input.value = "";
+    input.focus();
+  }
+
   return (
     <>
       <Head>
@@ -59,8 +82,7 @@ const Home: NextPage = () => {
             )}
           </div>
         </div>
-        {/* TODO: Add submit event */}
-        <form onSubmit={() => null} className={"bg-gray-400 sticky bottom-0"}>
+        <form onSubmit={handleSubmit} className={"bg-gray-400 sticky bottom-0"}>
           <div className="container mx-auto flex items-center gap-x-4 p-4 h-20">
             <input className={"flex-1 h-full px-4"} type="text" name={"content"} placeholder={"write some chat..."} />
             <button className={"h-full px-4 bg-white"} type={"submit"}>
