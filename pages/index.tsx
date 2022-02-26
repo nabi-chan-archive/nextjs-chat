@@ -2,8 +2,28 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import { useEffect } from "react";
+import { io } from "socket.io-client";
 
 const Home: NextPage = () => {
+  useEffect(() => {
+    const socket = io("", {
+      path: "/api/socket.io",
+    });
+
+    socket.on("connect", () => {
+      console.log("successfully connected socket.io server", socket);
+    });
+
+    socket.on("connect_error", (err) => {
+      console.log("failed to connect socket.io server", err);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
