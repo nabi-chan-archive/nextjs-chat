@@ -25,6 +25,10 @@ const Home: NextPage = () => {
       console.log("failed to connect socket.io server", err);
     });
 
+    socket.on("message", (message: IMsg) => {
+      setChat((prev) => [...prev, message]);
+    });
+
     return () => {
       socket.disconnect();
     };
