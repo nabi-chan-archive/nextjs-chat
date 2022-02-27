@@ -9,3 +9,54 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+
+//  profiles     Profile[]
+  joined_rooms UsersOnRoom[]
+  sended_chats Chat[]
+}
+
+//model Profile {
+//  id        String   @id @default(uuid())
+//  user_id   String
+//  username  String
+//  thumbnail String?
+//  createdAt DateTime @default(now())
+//
+//  user User @relation(fields: [user_id], references: [id])
+//}
+
+model UsersOnRoom {
+  id        String   @id @default(uuid())
+  room_id   String
+  user_id   String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id])
+  room Room @relation(fields: [room_id], references: [id])
+}
+
+model Chat {
+  id        String   @id @default(uuid())
+  room_id   String
+  user_id   String
+  message   String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id])
+  room Room @relation(fields: [room_id], references: [id])
+}
+
+model Room {
+  id        String   @id @default(uuid())
+  title     String
+  createdAt DateTime @default(now())
+
+  users UsersOnRoom[]
+  chats Chat[]
+}
