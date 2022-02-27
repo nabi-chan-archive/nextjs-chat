@@ -1,5 +1,5 @@
 import { NextApiRequest } from "next";
-import { NextApiResponseServerIO } from "../../types/next";
+import { NextApiResponseServerIO } from "types/next";
 
 export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
   if (req.method !== "POST") return res.status(405).end();
