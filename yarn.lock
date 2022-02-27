@@ -2164,6 +2164,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-sha512@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "js-sha512@npm:0.8.0"
+  checksum: 32ca371ebd14c6c5c83360fd8b036cad2211537bef546b199ac8b901917299cab4c68f7f7c26ae72f836bbce0349cb463df9a62cdb4c90e38090fdb4db89ee87
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -2571,6 +2578,7 @@ __metadata:
     eslint-config-next: 12.1.0
     eslint-config-prettier: ^8.4.0
     eslint-plugin-prettier: ^4.0.0
+    js-sha512: ^0.8.0
     next: 12.1.0
     prettier: ^2.5.1
     prisma: ^3.10.0
