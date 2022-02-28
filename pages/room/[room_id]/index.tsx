@@ -4,9 +4,11 @@ import { FormEvent, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
 interface IMsg {
-  user: string;
-  msg: string;
-  createdAt: number;
+  id: string;
+  room_id: string;
+  user_id: string;
+  message: string;
+  createdAt: string;
 }
 
 interface IProps {
@@ -14,7 +16,8 @@ interface IProps {
   msg: IMsg[];
 }
 
-const user = "User_" + String(~~(Math.random() * 1000000));
+// TODO: must changed hard-coded user id
+const user = "694bedd3-8776-40fe-be5a-584d1021ebae";
 
 export const getServerSideProps: GetServerSideProps<IProps> = async (ctx) => {
   const room_id = String(ctx.query.room_id);
@@ -88,12 +91,12 @@ const Home: NextPage<IProps> = ({ msg }) => {
         <div className={"flex-1"}>
           <div className="container mx-auto p-4">
             {chat.length ? (
-              chat.map((chat, i) => (
-                <div key={`msg_${i}`} className={"mb-1"}>
-                  <span className={chat.user === user ? "text-red-500" : ""}>
-                    {chat.user === user ? "Me" : chat.user}
+              chat.map((chat) => (
+                <div key={`msg_${chat.id}`} className={"mb-1"}>
+                  <span className={chat.user_id === user ? "text-red-500" : ""}>
+                    {chat.user_id === user ? "Me" : chat.user_id.slice(0, 8)}
                   </span>
-                  : {chat.msg}
+                  : {chat.message}
                 </div>
               ))
             ) : (
