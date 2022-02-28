@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { FormEvent, useEffect, useState } from "react";
 import { io } from "socket.io-client";
@@ -9,9 +9,28 @@ interface IMsg {
   createdAt: number;
 }
 
+interface IProps {
+  room_id: string;
+  msg: IMsg[];
+}
+
 const user = "User_" + String(~~(Math.random() * 1000000));
 
-const Home: NextPage = () => {
+export const getServerSideProps: GetServerSideProps<IProps> = async (ctx) => {
+  const room_id = String(ctx.query.room_id);
+
+  const response = await fetch(`http://localhost:3000/api/room/${room_id}`);
+  const msg = await response.json();
+
+  return {
+    props: {
+      room_id,
+      msg,
+    },
+  };
+};
+
+const Home: NextPage<IProps> = ({ msg }) => {
   useEffect(() => {
     const socket = io("", {
       path: "/api/socket.io",
@@ -34,7 +53,7 @@ const Home: NextPage = () => {
     };
   }, []);
 
-  const [chat, setChat] = useState<IMsg[]>([]);
+  const [chat, setChat] = useState<IMsg[]>(msg);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
