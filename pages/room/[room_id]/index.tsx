@@ -97,6 +97,7 @@ const Home: NextPage<IProps> = ({ msg }) => {
                     {chat.user_id === user ? "Me" : chat.user_id.slice(0, 8)}
                   </span>
                   : {chat.message}
+                  <span className={"ml-4 text-sm text-gray-300"}>{chat.createdAt}</span>
                 </div>
               ))
             ) : (
