@@ -9,16 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
   const { user_id, message } = req.body;
   const { room_id } = req.query;
 
-  const createdAt = Date.now();
-  const body = {
-    ...req.body,
-    createdAt,
-  };
-
-  res.socket?.server?.io?.socketsJoin(room_id);
-  res?.socket?.server?.io?.to(room_id)?.emit("message", body);
-
-  await prisma.chat.create({
+  const data = await prisma.chat.create({
     data: {
       user: {
         connect: {
@@ -34,5 +25,8 @@ export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
     },
   });
 
-  res.status(201).json(body);
+  res.socket?.server?.io?.socketsJoin(room_id);
+  res?.socket?.server?.io?.to(room_id)?.emit("message", data);
+
+  res.status(201).json(data);
 };
