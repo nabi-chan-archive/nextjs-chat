@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps<IProps> = async (ctx) => {
   };
 };
 
-const Home: NextPage<IProps> = ({ msg }) => {
+const Home: NextPage<IProps> = ({ room_id, msg }) => {
   useEffect(() => {
     const socket = io("", {
       path: "/api/socket.io",
