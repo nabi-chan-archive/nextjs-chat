@@ -8,9 +8,31 @@ const Home: NextPage = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [roomId, setRoomId] = useState<string>("");
 
-  async function handleRoomCreate() {}
+  async function handleRoomCreate() {
+    // create room
+    const response = await fetch("http://localhost:3000/api/room", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: "694bedd3-8776-40fe-be5a-584d1021ebae",
+      }),
+    });
 
-  async function handleRoomJoin(event: FormEvent<HTMLFormElement>) {}
+    if (response.ok) {
+      const data = await response.json();
+      setRoomId(data.room_id);
+      if (inputRef.current) {
+        inputRef.current.value = data.room_id;
+      }
+    }
+  }
+
+  async function handleRoomJoin(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (inputRef.current) await push(`/room/${inputRef.current.value}`);
+  }
 
   return (
     <>
