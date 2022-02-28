@@ -22,7 +22,10 @@ const user = "694bedd3-8776-40fe-be5a-584d1021ebae";
 export const getServerSideProps: GetServerSideProps<IProps> = async (ctx) => {
   const room_id = String(ctx.query.room_id);
 
-  const response = await fetch(`http://localhost:3000/api/room/${room_id}`);
+  await fetch(`http://localhost:3000/api/room/${room_id}`, {
+    method: "GET",
+  });
+  const response = await fetch(`http://localhost:3000/api/room/${room_id}/chats`);
   const msg = await response.json();
 
   return {

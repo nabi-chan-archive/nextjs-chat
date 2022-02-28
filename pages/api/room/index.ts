@@ -21,8 +21,6 @@ export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
       },
     });
 
-    res?.socket?.server?.io?.socketsJoin(response.room_id);
-
     return res.status(201).json(response);
   } else {
     return res.status(405).end();

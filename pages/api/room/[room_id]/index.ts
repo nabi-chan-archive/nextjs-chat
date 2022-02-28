@@ -1,20 +1,28 @@
 import { NextApiRequest } from "next";
 import { NextApiResponseServerIO } from "types/next";
-import { prisma } from "lib/prisma";
 
 export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
-  const room_id = String(req.query.room_id);
+  const { room_id } = req.query;
 
   if (req.method === "GET") {
-    const response = await prisma.chat.findMany({
-      where: {
-        room_id,
-      },
+    res.socket.server.io.once("connection", (socket) => {
+      console.log(`client ${socket.id} has connected`);
+
+      // do not make duplicate join chat-room
+      if (!socket.rooms.has(String(room_id))) {
+        console.log(`client ${socket.id} has joined ${room_id}`);
+        socket.join(room_id);
+      }
+
+      // handle disconnect
+      socket.on("disconnect", (reason) => {
+        console.log(`client ${socket.id} has disconnected ${reason}`);
+        socket.leave(String(room_id));
+      });
     });
 
-    res.json(response);
+    res.end();
   } else {
-    // block if method is not supported
     return res.status(405).end();
   }
 };

@@ -25,7 +25,6 @@ export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
     },
   });
 
-  res.socket?.server?.io?.socketsJoin(room_id);
   res?.socket?.server?.io?.to(room_id)?.emit("message", data);
 
   res.status(201).json(data);
