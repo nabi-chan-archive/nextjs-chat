@@ -65,11 +65,11 @@ const Home: NextPage<IProps> = ({ room_id, msg }) => {
     if (!input.value) return;
 
     const message = {
-      user,
-      msg: input.value,
+      user_id: user,
+      message: input.value,
     };
 
-    await fetch("/api/chat", {
+    await fetch(`/api/chat/${room_id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
