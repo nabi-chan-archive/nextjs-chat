@@ -39,6 +39,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     await prisma.$transaction(transaction);
 
     res.status(201).end();
+  } else if (req.method === "GET") {
+    const user_id = String(req.query.user_id);
+
+    const response = await prisma.profile.findMany({
+      where: {
+        user_id: {
+          equals: user_id,
+        },
+      },
+    });
+
+    return res.status(200).json(response);
   } else {
     return res.status(405).end();
   }
