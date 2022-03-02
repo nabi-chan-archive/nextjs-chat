@@ -13,6 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         profiles: {
           create: {
             username: username,
+            isDefault: true,
           },
         },
       },

@@ -26,6 +26,7 @@ model Profile {
   user_id   String
   username  String
   thumbnail String?
+  isDefault Boolean  @default(false)
   createdAt DateTime @default(now())
 
   user User @relation(fields: [user_id], references: [id])
