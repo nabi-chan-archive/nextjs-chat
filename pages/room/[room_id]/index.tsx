@@ -2,6 +2,7 @@ import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { FormEvent, useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import { useUserContext } from "hooks/useUserContext";
 
 interface IMsg {
   id: string;
@@ -15,9 +16,6 @@ interface IProps {
   room_id: string;
   msg: IMsg[];
 }
-
-// TODO: must changed hard-coded user id
-const user = "694bedd3-8776-40fe-be5a-584d1021ebae";
 
 export const getServerSideProps: GetServerSideProps<IProps> = async (ctx) => {
   const room_id = String(ctx.query.room_id);
@@ -37,6 +35,8 @@ export const getServerSideProps: GetServerSideProps<IProps> = async (ctx) => {
 };
 
 const Home: NextPage<IProps> = ({ room_id, msg }) => {
+  const { userId } = useUserContext();
+
   useEffect(() => {
     const socket = io("", {
       path: "/api/socket.io",
@@ -68,7 +68,7 @@ const Home: NextPage<IProps> = ({ room_id, msg }) => {
     if (!input.value) return;
 
     const message = {
-      user_id: user,
+      user_id: userId,
       message: input.value,
     };
 
@@ -96,8 +96,8 @@ const Home: NextPage<IProps> = ({ room_id, msg }) => {
             {chat.length ? (
               chat.map((chat) => (
                 <div key={`msg_${chat.id}`} className={"mb-1"}>
-                  <span className={chat.user_id === user ? "text-red-500" : ""}>
-                    {chat.user_id === user ? "Me" : chat.user_id.slice(0, 8)}
+                  <span className={chat.user_id === userId ? "text-red-500" : ""}>
+                    {chat.user_id === userId ? "Me" : chat.user_id.slice(0, 8)}
                   </span>
                   : {chat.message}
                   <span className={"ml-4 text-sm text-gray-300"}>{chat.createdAt}</span>
