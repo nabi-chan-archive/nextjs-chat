@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { FormEvent, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const { push } = useRouter();
@@ -41,6 +42,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={"flex flex-col gap-y-2 p-4 w-full h-screen border-gray-200"}>
+        <Link href={"/login"}>
+          <a className={"px-4 py-2 bg-gray-200 rounded-md text-center"}>로그인하기</a>
+        </Link>
         <button onClick={handleRoomCreate} className={"px-4 py-2 bg-gray-200 rounded-md"}>
           채팅방 생성하기
         </button>
