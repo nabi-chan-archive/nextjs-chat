@@ -1,9 +1,14 @@
 import { createContext, FC, useEffect, useState } from "react";
 
+interface IUserInfo {
+  userId: string;
+  jwtToken: string;
+}
+
 interface IUserContext {
   userId: string;
   jwtToken: string;
-  login: () => void;
+  setUserInfo: (user: IUserInfo) => void;
   logout: () => void;
 }
 
@@ -12,7 +17,7 @@ const doNothing = () => undefined;
 export const UserContext = createContext<IUserContext>({
   userId: "",
   jwtToken: "",
-  login: doNothing,
+  setUserInfo: doNothing,
   logout: doNothing,
 });
 
@@ -21,16 +26,12 @@ const UserContextProvider: FC = ({ children }) => {
   const [jwtToken, setJwtToken] = useState<string>("");
 
   useEffect(() => {
-    // TODO: login when cookie has jwt token
-    // TODO: remove hard-coded userId
-    setUserID("694bedd3-8776-40fe-be5a-584d1021ebae");
-
     return logout;
   }, []);
 
-  function login() {
-    // TODO: fetch user info
-    // TODO: Apply user info from JWT token
+  function setUserInfo({ userId, jwtToken }: IUserInfo) {
+    setUserID(userId);
+    setJwtToken(jwtToken);
   }
 
   function logout() {
@@ -43,7 +44,7 @@ const UserContextProvider: FC = ({ children }) => {
       value={{
         userId,
         jwtToken,
-        login,
+        setUserInfo,
         logout,
       }}
     >
