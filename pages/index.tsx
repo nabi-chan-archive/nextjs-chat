@@ -47,6 +47,9 @@ const Home: NextPage = () => {
         {!!userId ? (
           <>
             <span className={"px-4 py-2"}>{userId.slice(0, 8)}으로 로그인 되었습니다.</span>
+            <Link href={"/profile"}>
+              <a className={"px-4 py-2 bg-gray-200 rounded-md text-center"}>프로필 관리하기</a>
+            </Link>
             <button onClick={logout} className={"px-4 py-2 bg-gray-200 rounded-md"}>
               로그아웃하기
             </button>
