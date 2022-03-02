@@ -16,20 +16,20 @@ model User {
   password  String
   createdAt DateTime @default(now())
 
-//  profiles     Profile[]
+  profiles     Profile[]
   joined_rooms UsersOnRoom[]
   sended_chats Chat[]
 }
 
-//model Profile {
-//  id        String   @id @default(uuid())
-//  user_id   String
-//  username  String
-//  thumbnail String?
-//  createdAt DateTime @default(now())
-//
-//  user User @relation(fields: [user_id], references: [id])
-//}
+model Profile {
+  id        String   @id @default(uuid())
+  user_id   String
+  username  String
+  thumbnail String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id])
+}
 
 model UsersOnRoom {
   id        String   @id @default(uuid())
