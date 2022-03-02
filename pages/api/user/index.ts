@@ -4,12 +4,17 @@ import { prisma } from "lib/prisma";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "POST") {
-    const { email, password } = req.body;
+    const { email, password, username } = req.body;
 
     const { id, createdAt } = await prisma.user.create({
       data: {
         email,
         password: sha512(password),
+        profiles: {
+          create: {
+            username: username,
+          },
+        },
       },
     });
 
