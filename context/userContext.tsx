@@ -1,5 +1,5 @@
 import { createContext, FC, useEffect, useState } from "react";
-import { getCookies } from "cookies-next";
+import { getCookies, removeCookies } from "cookies-next";
 
 interface IUserInfo {
   userId: string;
@@ -43,6 +43,7 @@ const UserContextProvider: FC = ({ children }) => {
   }
 
   function logout() {
+    removeCookies("userId");
     setUserID("");
     setJwtToken("");
   }
