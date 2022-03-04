@@ -324,6 +324,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^16.10.2":
+  version: 16.11.26
+  resolution: "@types/node@npm:16.11.26"
+  checksum: 57757caaba3f0d95de82198cb276a1002c49b710108c932a1d02d7c91ff2fa57cfe2dd19fde60853b6dd90b0964b3cf35557981d2628e20aed6a909057aedfe6
+  languageName: node
+  linkType: hard
+
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
@@ -914,10 +921,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:~0.4.1":
+"cookie@npm:^0.4.0, cookie@npm:~0.4.1":
   version: 0.4.2
   resolution: "cookie@npm:0.4.2"
   checksum: a00833c998bedf8e787b4c342defe5fa419abd96b32f4464f718b91022586b8f1bafbddd499288e75c037642493c83083da426c6a9080d309e3bd90fd11baa9b
+  languageName: node
+  linkType: hard
+
+"cookies-next@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "cookies-next@npm:2.0.4"
+  dependencies:
+    "@types/cookie": ^0.4.1
+    "@types/node": ^16.10.2
+    cookie: ^0.4.0
+  checksum: fc25b4215f2d7092d72f8591c9bc8b30f3ea866fca76e536e31825899c3f05eefb97cdb4152c565429cab38d20f2f937d08aea76a43d3cdd3ca36e24a347fe00
   languageName: node
   linkType: hard
 
@@ -2574,6 +2592,7 @@ __metadata:
     "@types/node": 17.0.21
     "@types/react": 17.0.39
     autoprefixer: ^10.4.2
+    cookies-next: ^2.0.4
     eslint: 8.10.0
     eslint-config-next: 12.1.0
     eslint-config-prettier: ^8.4.0
