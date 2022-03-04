@@ -3,7 +3,21 @@ import { NextApiResponseServerIO } from "types/next";
 import { prisma } from "lib/prisma";
 
 export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
-  if (req.method === "POST") {
+  if (req.method === "GET") {
+    const user_id = String(req.query.user_id);
+
+    const response = await prisma.room.findMany({
+      where: {
+        users: {
+          every: {
+            user_id,
+          },
+        },
+      },
+    });
+
+    return res.status(200).json(response);
+  } else if (req.method === "POST") {
     const { user_id, title } = req.body;
 
     const response = await prisma.usersOnRoom.create({
