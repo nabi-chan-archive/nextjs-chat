@@ -3,6 +3,7 @@ import Head from "next/head";
 import { FormEvent, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { useUserContext } from "hooks/useUserContext";
+import { getCookies } from "cookies-next";
 
 interface IMsg {
   id: string;
@@ -19,8 +20,9 @@ interface IProps {
 
 export const getServerSideProps: GetServerSideProps<IProps> = async (ctx) => {
   const room_id = String(ctx.query.room_id);
+  const { userId } = getCookies(ctx);
 
-  await fetch(`http://localhost:3000/api/room/${room_id}`, {
+  await fetch(`http://localhost:3000/api/room/${room_id}?user_id=${userId}`, {
     method: "GET",
   });
   const response = await fetch(`http://localhost:3000/api/room/${room_id}/chats`);
